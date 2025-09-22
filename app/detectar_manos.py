@@ -36,6 +36,8 @@ with mp_hands.Hands(
                 x1=int(hand_landmarks.landmark[mp_hands.HandLandmark.THUMB_MCP].x*width)
                 y1=int(hand_landmarks.landmark[mp_hands.HandLandmark.THUMB_MCP].y*height)
                 posiciones.append((x1,y1))
+                print("Empieza mano")
+                print(math.dist((x4,y4),(x1,y1)))
                 #Indice
                 x8=int(hand_landmarks.landmark[mp_hands.HandLandmark.INDEX_FINGER_TIP].x*width)
                 y8=int(hand_landmarks.landmark[mp_hands.HandLandmark.INDEX_FINGER_TIP].y*height)
@@ -43,6 +45,7 @@ with mp_hands.Hands(
                 x5=int(hand_landmarks.landmark[mp_hands.HandLandmark.INDEX_FINGER_MCP].x*width)
                 y5=int(hand_landmarks.landmark[mp_hands.HandLandmark.INDEX_FINGER_MCP].y*height)
                 posiciones.append((x5,y5))
+                print(math.dist((x8,y8),(x5,y5)))
                 #Corazón
                 x12=int(hand_landmarks.landmark[mp_hands.HandLandmark.MIDDLE_FINGER_TIP].x*width)
                 y12=int(hand_landmarks.landmark[mp_hands.HandLandmark.MIDDLE_FINGER_TIP].y*height)
@@ -50,6 +53,7 @@ with mp_hands.Hands(
                 x9=int(hand_landmarks.landmark[mp_hands.HandLandmark.MIDDLE_FINGER_MCP].x*width)
                 y9=int(hand_landmarks.landmark[mp_hands.HandLandmark.MIDDLE_FINGER_MCP].y*height)
                 posiciones.append((x9,y9))
+                print(math.dist((x12,y12),(x9,y9)))
                 #Anular
                 x16=int(hand_landmarks.landmark[mp_hands.HandLandmark.RING_FINGER_TIP].x*width)
                 y16=int(hand_landmarks.landmark[mp_hands.HandLandmark.RING_FINGER_TIP].y*height)
@@ -57,6 +61,7 @@ with mp_hands.Hands(
                 x13=int(hand_landmarks.landmark[mp_hands.HandLandmark.RING_FINGER_MCP].x*width)
                 y13=int(hand_landmarks.landmark[mp_hands.HandLandmark.RING_FINGER_MCP].y*height)
                 posiciones.append((x13,y13))
+                print(math.dist((x16,y16),(x13,y13)))
                 #Meñique
                 x20=int(hand_landmarks.landmark[mp_hands.HandLandmark.PINKY_TIP].x*width)
                 y20=int(hand_landmarks.landmark[mp_hands.HandLandmark.PINKY_TIP].y*height)
@@ -64,7 +69,9 @@ with mp_hands.Hands(
                 x17=int(hand_landmarks.landmark[mp_hands.HandLandmark.PINKY_MCP].x*width)
                 y17=int(hand_landmarks.landmark[mp_hands.HandLandmark.PINKY_MCP].y*height)
                 posiciones.append((x17,y17))
-                print(posiciones)
+                print(math.dist((x20,y20),(x17,y17)))
+                print("Fin mano")
+                #print(posiciones)
                 #indice = math.dist((x8,y8),(x5,y5))
                 #print(indice)
                 #if indice <= 24:
