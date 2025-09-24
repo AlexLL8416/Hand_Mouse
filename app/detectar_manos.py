@@ -3,6 +3,7 @@ import numpy
 import mediapipe
 import math
 import detectar_gestos
+import mover_raton
 
 mp_hands = mediapipe.solutions.hands
 mp_drawing= mediapipe.solutions.drawing_utils
@@ -65,10 +66,11 @@ with mp_hands.Hands(
                 x17=int(hand_landmarks.landmark[mp_hands.HandLandmark.PINKY_MCP].x*width)
                 y17=int(hand_landmarks.landmark[mp_hands.HandLandmark.PINKY_MCP].y*height)
                 posiciones.append((x17,y17))
-                print(detectar_gestos.manoCerrada(posiciones))
+                #print(detectar_gestos.manoCerrada(posiciones))
                 mp_drawing.draw_landmarks(frame_invertido, hand_landmarks, mp_hands.HAND_CONNECTIONS)
-                cv2.circle(frame_invertido, (x8,y8),3,(255,0,0),3)
+                cv2.circle(frame_invertido, (x8,y8),3,(168,88,237),3)
                 cv2.circle(frame_invertido, (x5,y5),3,(0,255,0),3)
+                mover_raton.moveRaton(x8,y8,width,height)
         
         cv2.imshow("Detección de manos",frame_invertido) #Nombre de la pestaña que se abre y el video que muestra
         if cv2.waitKey(1) == ord("q"): #Si pulso la q deja de funcionar, no funciona con la mayuscula
