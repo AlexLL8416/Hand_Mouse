@@ -14,6 +14,7 @@ cap = cv2.VideoCapture(0)
 
 umbrales = None
 tiempo_inicio = time.time()
+pulgar_estado_anterior = "abierto"  # al inicio
 
 with mp_hands.Hands(
                max_num_hands=1,
@@ -94,10 +95,20 @@ with mp_hands.Hands(
 
                 elif umbrales is None:
                     umbrales = calibracion.finalizar_calibracion()
-                    print(umbrales)
                 else:
-                    #detectar_gestos(posiciones, frame, umbrales)
                     mover_raton.moveRaton(x8,y8,width,height)
+                    print(x8,",",y8)
+                    # comprobar estado actual del pulgar
+                    if detectar_gestos.dedoCerrado(posiciones, umbrales, "pulgar"):
+                        pulgar_estado_actual = "cerrado"
+                    else:
+                        pulgar_estado_actual = "abierto"
+
+                    # transición abierto -> cerrado
+                    if pulgar_estado_anterior == "abierto" and pulgar_estado_actual == "cerrado":
+                        mover_raton.clickRaton()   # nueva función que hace click
+
+                    pulgar_estado_anterior = pulgar_estado_actual
         
         cv2.imshow("Detección de manos",frame_invertido) #Nombre de la pestaña que se abre y el video que muestra
         if cv2.waitKey(1) == ord("q"): #Si pulso la q deja de funcionar, no funciona con la mayuscula
