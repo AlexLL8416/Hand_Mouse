@@ -14,16 +14,17 @@ def analizarDistancias(lista_posicones):
 
 # Umbrales para considerar cada dedo "cerrado"
 UMBRAL_DEDOS = {
-    "pulgar": 0.7,
-    "indice": 0.5,
-    "corazon": 0.4,
-    "anular": 0.35,
-    "menique": 0.35,
+    #"pulgar": 0.7,
+    "indice": 0.16,
+    "corazon": 0.23,
+    "anular": 0.23,
+    "menique": 0.21,
 }
 
 def dedoCerrado(lista_posiciones, dedo):
     """Devuelve True si el dedo indicado está cerrado."""
     distancias = analizarDistancias(lista_posiciones)
+    #print(distancias)
     # usamos el orden de UMBRAL_DEDOS.keys() para asignar índices
     dedos = list(UMBRAL_DEDOS.keys())
     idx = dedos.index(dedo)

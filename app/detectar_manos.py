@@ -3,11 +3,17 @@ import numpy
 import mediapipe
 import math
 import detectar_gestos
+import mover_raton
+import calibracion
+import time
 
 mp_hands = mediapipe.solutions.hands
 mp_drawing= mediapipe.solutions.drawing_utils
 
 cap = cv2.VideoCapture(0)
+
+umbrales = None
+tiempo_inicio = time.time()
 
 with mp_hands.Hands(
                max_num_hands=1,
@@ -65,10 +71,32 @@ with mp_hands.Hands(
                 x17=int(hand_landmarks.landmark[mp_hands.HandLandmark.PINKY_MCP].x*width)
                 y17=int(hand_landmarks.landmark[mp_hands.HandLandmark.PINKY_MCP].y*height)
                 posiciones.append((x17,y17))
-                print(detectar_gestos.manoCerrada(posiciones))
+                #print(detectar_gestos.manoCerrada(posiciones))
                 mp_drawing.draw_landmarks(frame_invertido, hand_landmarks, mp_hands.HAND_CONNECTIONS)
                 cv2.circle(frame_invertido, (x8,y8),3,(255,0,0),3)
                 cv2.circle(frame_invertido, (x5,y5),3,(0,255,0),3)
+                tiempo = time.time() - tiempo_inicio
+                #Calibracion
+                if tiempo < 5:
+                    cv2.putText(frame_invertido, "COLOCATE EN POSICION", (50,50),
+                                cv2.FONT_HERSHEY_SIMPLEX, 1, (0,255,255), 2)
+
+                elif 5 <= tiempo < 13:  # 5s texto + 5s recoger
+                    cv2.putText(frame_invertido, "CALIBRANDO MANO ABIERTA", (50, 50),
+                                cv2.FONT_HERSHEY_SIMPLEX, 1, (0,255,0), 2)
+                    calibracion.procesar_calibracion(posiciones, "abierto")
+
+                elif 13 <= tiempo < 21:
+                    cv2.putText(frame_invertido, "CALIBRANDO MANO CERRADA", (50, 50),
+                                cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,255), 2)
+                    calibracion.procesar_calibracion(posiciones, "cerrado")
+
+                elif umbrales is None:
+                    umbrales = calibracion.finalizar_calibracion()
+                    print(umbrales)
+                else:
+                    #detectar_gestos(posiciones, frame, umbrales)
+                    mover_raton.moveRaton(x8,y8,width,height)
         
         cv2.imshow("Detección de manos",frame_invertido) #Nombre de la pestaña que se abre y el video que muestra
         if cv2.waitKey(1) == ord("q"): #Si pulso la q deja de funcionar, no funciona con la mayuscula
