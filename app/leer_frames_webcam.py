@@ -1,6 +1,10 @@
 import cv2
 import numpy
 
+'''
+PRIMERAS PRUEBAS CON EL MÓDULO CV2
+'''
+
 cap = cv2.VideoCapture(0)
 if not cap.isOpened():
     print("No se puede abrir la cámara")

@@ -7,17 +7,6 @@ def analizarDistancias(lista_posicones):
     ref = math.dist(lista_posicones[3], lista_posicones[9]) # índice_mcp y meñique_mcp
     return [d/ref for d in res]
 
-'''
-# Umbrales para considerar cada dedo "cerrado"
-UMBRAL_DEDOS = {
-    #"pulgar": 0.7,
-    "indice": 0.16,
-    "corazon": 0.23,
-    "anular": 0.23,
-    "menique": 0.21,
-}
-'''
-
 def dedoCerrado(lista_posiciones, umbrales, dedo):
     """Devuelve True si el dedo indicado está cerrado."""
     distancias = analizarDistancias(lista_posiciones)
@@ -26,7 +15,7 @@ def dedoCerrado(lista_posiciones, umbrales, dedo):
     dedos = list(umbrales.keys())
     idx = dedos.index(dedo)
     ref = math.dist(lista_posiciones[3], lista_posiciones[9])
-    return distancias[idx] <= (umbrales[dedo]/ref) #True si dedo está cerrado
+    return distancias[idx] <= (1.1*umbrales[dedo]/ref) #True si dedo está cerrado
 
 def manoAbierta(lista_posiciones,umbrales):
     """Devuelve True si todos los dedos están abiertos."""
@@ -41,3 +30,17 @@ def manoCerrada(lista_posiciones,umbrales):
         dedoCerrado(lista_posiciones, umbrales, dedo)
         for dedo in umbrales
     )
+
+def peineta(lista_posiciones,umbrales):
+    cerrados = True
+    for dedo in umbrales:
+        if dedo != "corazon":
+            cerrados = cerrados and dedoCerrado(lista_posiciones,umbrales,dedo)
+    return cerrados and (not dedoCerrado(lista_posiciones,umbrales,"corazon"))
+
+def soloIndice(lista_posiciones,umbrales):
+    cerrados = True
+    for dedo in umbrales:
+        if dedo != "indice" or dedo != "pulgar":
+            cerrados = cerrados and dedoCerrado(lista_posiciones,umbrales,dedo)
+    return cerrados and (not dedoCerrado(lista_posiciones,umbrales,"indice"))
