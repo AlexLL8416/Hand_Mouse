@@ -45,7 +45,7 @@ pip install opencv-python mediapipe pyautogui numpy
     - Call mover_raton.moveRaton() to move the cursor.
     - Gestures are detected with detect_gestures.
     - If the thumb moves from open to closed, a click is executed (mover_raton.clickRaton()).
-    - If the comb is detected, the program closes.
+    - If a special gesture is detected, the program closes.
 
 ## 🔮 Possible improvements
 - Add double-click or right-click with new gestures.
